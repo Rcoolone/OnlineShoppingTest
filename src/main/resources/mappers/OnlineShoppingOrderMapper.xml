@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rcoolone.onlineshoppingtest.db.mappers.OnlineShoppingOrderMapper">
+  <resultMap id="BaseResultMap" type="com.rcoolone.onlineshoppingtest.db.po.OnlineShoppingOrder">
+    <id column="order_Id" jdbcType="BIGINT" property="orderId" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="order_status" jdbcType="INTEGER" property="orderStatus" />
+    <result column="commodity_id" jdbcType="BIGINT" property="commodityId" />
+    <result column="order_amount" jdbcType="INTEGER" property="orderAmount" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    order_Id, order_no, order_status, commodity_id, order_amount, create_time, pay_time, 
+    user_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from onlineShoppingOrder
+    where order_Id = #{orderId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryOrderByOrderNo" resultType="com.rcoolone.onlineshoppingtest.db.po.OnlineShoppingOrder">
+    select
+    <include refid="Base_Column_List" />
+    from onlineShoppingOrder
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from onlineShoppingOrder
+    where order_Id = #{orderId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.rcoolone.onlineshoppingtest.db.po.OnlineShoppingOrder">
+    insert into onlineShoppingOrder (order_Id, order_no, order_status, 
+      commodity_id, order_amount, create_time, 
+      pay_time, user_id)
+    values (#{orderId,jdbcType=BIGINT}, #{orderNo,jdbcType=VARCHAR}, #{orderStatus,jdbcType=INTEGER}, 
+      #{commodityId,jdbcType=BIGINT}, #{orderAmount,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{payTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rcoolone.onlineshoppingtest.db.po.OnlineShoppingOrder">
+    insert into onlineShoppingOrder
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_Id,
+      </if>
+      <if test="orderNo != null">
+        order_no,
+      </if>
+      <if test="orderStatus != null">
+        order_status,
+      </if>
+      <if test="commodityId != null">
+        commodity_id,
+      </if>
+      <if test="orderAmount != null">
+        order_amount,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="payTime != null">
+        pay_time,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null">
+        #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="commodityId != null">
+        #{commodityId,jdbcType=BIGINT},
+      </if>
+      <if test="orderAmount != null">
+        #{orderAmount,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null">
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rcoolone.onlineshoppingtest.db.po.OnlineShoppingOrder">
+    update onlineShoppingOrder
+    <set>
+      <if test="orderNo != null">
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null">
+        order_status = #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="commodityId != null">
+        commodity_id = #{commodityId,jdbcType=BIGINT},
+      </if>
+      <if test="orderAmount != null">
+        order_amount = #{orderAmount,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null">
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where order_Id = #{orderId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rcoolone.onlineshoppingtest.db.po.OnlineShoppingOrder">
+    update onlineShoppingOrder
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      order_status = #{orderStatus,jdbcType=INTEGER},
+      commodity_id = #{commodityId,jdbcType=BIGINT},
+      order_amount = #{orderAmount,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=BIGINT}
+    where order_Id = #{orderId,jdbcType=BIGINT}
+  </update>
+</mapper>

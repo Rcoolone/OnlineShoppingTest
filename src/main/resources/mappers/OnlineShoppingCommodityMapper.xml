@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rcoolone.onlineshoppingtest.db.mappers.OnlineShoppingCommodityMapper">
+  <resultMap id="BaseResultMap" type="com.rcoolone.onlineshoppingtest.db.po.OnlineShoppingCommodity">
+    <id column="commodity_id" jdbcType="BIGINT" property="commodityId" />
+    <result column="commodity_name" jdbcType="VARCHAR" property="commodityName" />
+    <result column="commodity_desc" jdbcType="VARCHAR" property="commodityDesc" />
+    <result column="price" jdbcType="INTEGER" property="price" />
+    <result column="available_stock" jdbcType="INTEGER" property="availableStock" />
+    <result column="total_stock" jdbcType="INTEGER" property="totalStock" />
+    <result column="creator_user_id" jdbcType="BIGINT" property="creatorUserId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    commodity_id, commodity_name, commodity_desc, price, available_stock, total_stock, 
+    creator_user_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from onlineShoppingCommodity
+    where commodity_id = #{commodityId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByCreatorUserId"
+            resultType="com.rcoolone.onlineshoppingtest.db.po.OnlineShoppingCommodity">
+    select
+    <include refid="Base_Column_List" />
+    from onlineShoppingCommodity
+    where creator_user_id = #{sellerId,jdbcType=BIGINT}
+  </select>
+  <select id="listAllCommodity" resultType="com.rcoolone.onlineshoppingtest.db.po.OnlineShoppingCommodity">
+    select
+    <include refid="Base_Column_List" />
+    from onlineShoppingCommodity
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from onlineShoppingCommodity
+    where commodity_id = #{commodityId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.rcoolone.onlineshoppingtest.db.po.OnlineShoppingCommodity">
+    insert into onlineShoppingCommodity (commodity_id, commodity_name, commodity_desc, 
+      price, available_stock, total_stock, 
+      creator_user_id)
+    values (#{commodityId,jdbcType=BIGINT}, #{commodityName,jdbcType=VARCHAR}, #{commodityDesc,jdbcType=VARCHAR}, 
+      #{price,jdbcType=INTEGER}, #{availableStock,jdbcType=INTEGER}, #{totalStock,jdbcType=INTEGER}, 
+      #{creatorUserId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rcoolone.onlineshoppingtest.db.po.OnlineShoppingCommodity">
+    insert into onlineShoppingCommodity
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="commodityId != null">
+        commodity_id,
+      </if>
+      <if test="commodityName != null">
+        commodity_name,
+      </if>
+      <if test="commodityDesc != null">
+        commodity_desc,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="availableStock != null">
+        available_stock,
+      </if>
+      <if test="totalStock != null">
+        total_stock,
+      </if>
+      <if test="creatorUserId != null">
+        creator_user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="commodityId != null">
+        #{commodityId,jdbcType=BIGINT},
+      </if>
+      <if test="commodityName != null">
+        #{commodityName,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityDesc != null">
+        #{commodityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=INTEGER},
+      </if>
+      <if test="availableStock != null">
+        #{availableStock,jdbcType=INTEGER},
+      </if>
+      <if test="totalStock != null">
+        #{totalStock,jdbcType=INTEGER},
+      </if>
+      <if test="creatorUserId != null">
+        #{creatorUserId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rcoolone.onlineshoppingtest.db.po.OnlineShoppingCommodity">
+    update onlineShoppingCommodity
+    <set>
+      <if test="commodityName != null">
+        commodity_name = #{commodityName,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityDesc != null">
+        commodity_desc = #{commodityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=INTEGER},
+      </if>
+      <if test="availableStock != null">
+        available_stock = #{availableStock,jdbcType=INTEGER},
+      </if>
+      <if test="totalStock != null">
+        total_stock = #{totalStock,jdbcType=INTEGER},
+      </if>
+      <if test="creatorUserId != null">
+        creator_user_id = #{creatorUserId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where commodity_id = #{commodityId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.rcoolone.onlineshoppingtest.db.po.OnlineShoppingCommodity">
+    update onlineShoppingCommodity
+    set commodity_name = #{commodityName,jdbcType=VARCHAR},
+      commodity_desc = #{commodityDesc,jdbcType=VARCHAR},
+      price = #{price,jdbcType=INTEGER},
+      available_stock = #{availableStock,jdbcType=INTEGER},
+      total_stock = #{totalStock,jdbcType=INTEGER},
+      creator_user_id = #{creatorUserId,jdbcType=BIGINT}
+    where commodity_id = #{commodityId,jdbcType=BIGINT}
+  </update>
+
+  <update id="deductStock" parameterType="java.lang.Long">
+     update onlineShoppingCommodity
+     set available_stock = available_stock - 1
+     where commodity_id = #{commodityId,jdbcType=BIGINT}
+     and available_stock > 0
+  </update>
+</mapper>
